@@ -4,14 +4,14 @@ const cors = require('cors');
 
 const app = express();
 app.use(express.json());
-app.use(cors());  // Allows requests from React frontend
+app.use(cors());  
 
-// MySQL connection setup
+
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'Krati@0909',  // Use your MySQL password here
-    database: 'chat_app_db'     // Use the database name you created earlier
+    password: 'Krati@0909',  
+    database: 'chat_app_db'     
 });
 
 db.connect((err) => {
@@ -22,12 +22,12 @@ db.connect((err) => {
     }
 });
 
-// Root route (for debugging)
+
 app.get('/', (req, res) => {
     res.send('Hello from the backend!');
 });
 
-// API to get all messages
+
 app.get('/messages', (req, res) => {
     db.query('SELECT * FROM messages ORDER BY timestamp DESC', (err, results) => {
         if (err) {
@@ -39,7 +39,7 @@ app.get('/messages', (req, res) => {
 });
 
 
-// API to send a new message
+
 app.post('/send', (req, res) => {
     const { username, message } = req.body;
     db.query('INSERT INTO messages (username, message) VALUES (?, ?)', [username, message], (err, results) => {
@@ -51,7 +51,7 @@ app.post('/send', (req, res) => {
     });
 });
 
-// Start the server
+
 const port = 5000;
 app.listen(5000, () => console.log("Server is running on port 5000"));
 
